@@ -1,0 +1,32 @@
+@font-face {
+    font-family: DancingScript-Regular;
+    src: url('font/DancingScript-Regular.ttf') ;
+}
+h1{
+  margin: 0;
+  padding: 0;
+  text-align:center;
+  color: #32D5A2;
+  font-family: 'Dancing Script', cursive;
+  font-size: 4rem;
+}
+div.weather_info{
+  margin-top: 5%;
+  text-align: center;
+}
+p.city , p.temp{
+  margin: 4% 0 2%  ;
+  line-height: 1.6;
+}
+p.condition{
+  margin: 4% 0 0  ;
+  line-height: 1.6;
+}
+div.weather_info img{
+  width: 20%
+}
+div.weather_info p span{
+  font-size: 3rem;
+  color: #32D5A2;
+  font-family: 'Dancing Script', cursive;
+}

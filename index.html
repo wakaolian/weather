@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+	<title>外部apiとJSONの利用</title>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="app">
+<div class="weather_info">
+	<h1>weather info</h1>
+      <p class="city">都市<br><span>{{ city }}</span></p>
+      <p class="condition">現在の天気<br><span>{{ condition.main }}</span></p>
+
+			<img v-if="condition.main === 'Clear'" src="img/sun.png" alt="晴れ">
+			<img v-else-if="condition.main === 'Clouds'" src="img/clouds.png" alt="曇り" >
+			<img v-else="condition.main === 'Rain'" src="img/rain.png" alt="雨" >
+      <p class="temp">現在の気温<br><span>{{ temp }}</span></p>
+    </div>
+</div>
+<script>
+let weatherApp = new Vue ({
+  el: '#app',
+  //データの初期値として全てnullを入れておく
+  data: {
+    city: null,
+    temp: null,
+    condition: {
+      main: null
+    }
+  },
+  //メソッドを定義
+  methods: {
+  //getWeather関数を作成する
+    getWeather() {
+  //APIキーを入れたエンドポイントを用意しておく
+    let url ="http://api.openweathermap.org/data/2.5/weather?q=Tokyo,jp&APPID=94dd61dc333d419793a0fdd345a4f031"
+  //axios.getを使ってエンドポイントを叩く→openweathermapからデータが返ってくる
+    axios.get(url)
+    .then(function(response){
+  //返ってきたデータから必要なものを取り出す
+      this.city = response.data.name
+      this.temp = Math.round(response.data.main.temp - 273) + "℃"
+      this.condition = response.data.weather[0]
+    }.bind(this))
+    .catch(function(error){
+      console.log(error)
+    })
+    },
+  },
+  //ライフサイクルフックを使いマウントする前に天気データを取ってくる
+  beforeMount() {
+  //getWeather関数を実行する
+    this.getWeather();
+    }
+});
+</script>
+</body>
+</html>
